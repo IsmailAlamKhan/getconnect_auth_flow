@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getconnect_auth_flow/consts.dart';
 
 import 'package:getconnect_auth_flow/statemanagement/statemanagement.dart';
 import 'package:getconnect_auth_flow/ui/pages/auth/register.dart';
