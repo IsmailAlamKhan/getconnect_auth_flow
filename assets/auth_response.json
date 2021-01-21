@@ -1,0 +1,14 @@
+{
+  "refreshToken": "",
+  "token": "",
+  "user": {
+    "id": "",
+    "email": "@test.com",
+    "emailConfirmed": false,
+    "role": 0,
+    "picture": "",
+    "active": true,
+    "createdAt": "",
+    "updatedAt": ""
+  }
+}
