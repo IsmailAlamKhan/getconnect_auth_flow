@@ -28,4 +28,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 //* get generate model with assets/auth_response.json
