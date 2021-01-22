@@ -42,3 +42,12 @@ void showSuccessSnackBar(String body) {
     margin: EdgeInsets.zero,
   );
 }
+
+extension ExtendedDouble on double {
+  Widget get sizedHeight => SizedBox(
+        height: this,
+      );
+  Widget get sizedWidget => SizedBox(
+        width: this,
+      );
+}

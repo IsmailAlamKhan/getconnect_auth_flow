@@ -5,6 +5,11 @@ class AuthResponse {
 
   AuthResponse({this.refreshToken, this.token, this.user});
 
+  @override
+  String toString() {
+    return 'AuthResponse = {\'refreshToken\'=${this.refreshToken}\'\ntoken\'=${this.token}}';
+  }
+
   AuthResponse.fromJson(Map<String, dynamic> json) {
     refreshToken = json['refreshToken'];
     token = json['token'];
@@ -77,7 +82,7 @@ class Role {
   });
 }
 
-List<Role> dropDownClass = [
+List<Role> roles = [
   Role(
     text: 'Client',
     value: 0,

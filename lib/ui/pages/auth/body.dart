@@ -41,7 +41,7 @@ class Auth extends GetView<AuthController> {
                   if (!_formKey.currentState.validate()) {
                     showErrorSnackBar('Please validate all the fields');
                   } else {
-                    // Do Auth
+                    controller.auth(authState);
                   }
                 },
                 child: Text(title),

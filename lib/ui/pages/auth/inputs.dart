@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:getconnect_auth_flow/consts.dart';
 
 import 'package:getconnect_auth_flow/statemanagement/statemanagement.dart';
 
@@ -24,7 +25,7 @@ class Inputs extends StatelessWidget {
           focusNode: emailFocusNode,
           label: 'Email',
           validator: (value) {
-            if (value.isEmail) return 'Please enter a valid Email';
+            if (!value.isEmail) return 'Please enter a valid Email';
             return null;
           },
           controller: controller.emailTEC,
@@ -33,6 +34,8 @@ class Inputs extends StatelessWidget {
         Obx(
           () => DefaultTextField.password(
             hideShowPas: () => controller.obscure = !controller.obscure,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => controller.auth(authState),
             focusNode: passFocusNode,
             obscure: controller.obscure,
             controller: controller.passTEC,
@@ -74,7 +77,7 @@ class Inputs extends StatelessWidget {
       Obx(
         () => DropdownButtonFormField<Role>(
           decoration: InputDecoration(
-            hintText: 'Role',
+            labelText: 'Role*',
           ),
           validator: (value) {
             if (value == null) return 'Role is Required';
@@ -88,7 +91,7 @@ class Inputs extends StatelessWidget {
           onChanged: (Role newValue) {
             controller.role = newValue;
           },
-          items: dropDownClass
+          items: roles
               .map(
                 (element) => DropdownMenuItem<Role>(
                   value: element,
@@ -102,6 +105,21 @@ class Inputs extends StatelessWidget {
         () => DefaultTextField.password(
           hideShowPas: () => controller.obscure = !controller.obscure,
           controller: controller.passTEC,
+          obscure: controller.obscure,
+        ),
+      ),
+      Obx(
+        () => DefaultTextField.password(
+          validator: (value) {
+            if (value != controller.passTEC.text) {
+              return 'Passwords don\'t match';
+            }
+            return null;
+          },
+          hideShowPas: () => controller.obscure = !controller.obscure,
+          isConPass: true,
+          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (_) => controller.auth(authState),
           obscure: controller.obscure,
         ),
       ),
@@ -140,7 +158,8 @@ class DefaultTextField extends StatelessWidget {
     @required VoidCallback hideShowPas,
     this.onFieldSubmitted,
     this.textInputAction,
-  })  : label = 'Email',
+    bool isConPass = false,
+  })  : label = '${isConPass ? 'Confirm ' : ''}Password',
         mandatory = true,
         suffixIcon = IconButton(
           icon: Icon(
@@ -175,24 +194,15 @@ class DefaultTextField extends StatelessWidget {
         if (value.isEmpty) {
           return '$label is required';
         }
-        validator?.call(value);
-        return null;
+
+        return validator?.call(value);
       },
       controller: controller,
       decoration: InputDecoration(
-        hintText: _label,
+        labelText: _label,
         suffixIcon: suffixIcon,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
-}
-
-extension ExtendedDouble on double {
-  Widget get sizedHeight => SizedBox(
-        height: this,
-      );
-  Widget get sizedWidget => SizedBox(
-        width: this,
-      );
 }
